@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -68,5 +69,18 @@ public class Pomodoro extends TimerTask {
         LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(timeStatus.getTime());
         return Date.from(localDateTime.atZone(
                 ZoneId.systemDefault()).toInstant());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pomodoro)) return false;
+        Pomodoro pomodoro = (Pomodoro) o;
+        return Objects.equals(getId(), pomodoro.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
