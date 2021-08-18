@@ -25,12 +25,12 @@ public class RemainTime {
 
 
     public Long getRemainTime() {
-        Long between = getTimeWhenTimerStarted();
-        if (between != null) return between;
+        Long timerRecordTime = getTimerRecordTime();
+        if (timerRecordTime != null) return timerRecordTime;
         return remainTime;
     }
 
-    private Long getTimeWhenTimerStarted() {
+    private Long getTimerRecordTime() {
         if (Objects.nonNull(endTime)) {
             Duration between = Duration.between(LocalDateTime.now(), endTime);
             return between.isNegative() ? 0 : between.toMinutes();
