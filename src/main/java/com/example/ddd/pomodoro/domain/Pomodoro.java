@@ -29,10 +29,6 @@ public class Pomodoro extends TimerTask {
     @Embedded
     private RemainTime remainTime;
 
-    public Long getRemainTime() {
-        return remainTime.getRemainTime();
-    }
-
     @Enumerated(EnumType.STRING)
     private TimeStatus timeStatus;
 
@@ -45,6 +41,23 @@ public class Pomodoro extends TimerTask {
         this.remainTime = new RemainTime(TimeStatus.STOP);
     }
 
+    public void start(TimeStatus timeStatus) {
+        this.timeStatus = timeStatus;
+        this.remainTime = new RemainTime(timeStatus);
+        setTimer(timeStatus);
+    }
+
+    private void setTimer(TimeStatus timeStatus) {
+        Timer timer = new Timer();
+        timer.schedule(this, getEndTime(timeStatus));
+    }
+
+    private Date getEndTime(TimeStatus timeStatus) {
+        LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(timeStatus.getTime());
+        return Date.from(localDateTime.atZone(
+                ZoneId.systemDefault()).toInstant());
+    }
+
     public String getTodo() {
         return todo.getTodo();
     }
@@ -54,21 +67,8 @@ public class Pomodoro extends TimerTask {
         this.timeStatus = TimeStatus.STOP;
     }
 
-    public void start(TimeStatus timeStatus) {
-        this.timeStatus = timeStatus;
-        this.remainTime = new RemainTime(timeStatus);
-        setTimer(timeStatus);
-    }
-
-    private void setTimer(TimeStatus timeStatus) {
-        Timer timer = new Timer();
-        timer.schedule(this, getEndDate(timeStatus));
-    }
-
-    private Date getEndDate(TimeStatus timeStatus) {
-        LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(timeStatus.getTime());
-        return Date.from(localDateTime.atZone(
-                ZoneId.systemDefault()).toInstant());
+    public Long getRemainTime() {
+        return remainTime.getRemainTime();
     }
 
     @Override
