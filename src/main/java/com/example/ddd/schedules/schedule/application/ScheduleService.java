@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.function.Predicate.not;
+
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -32,17 +34,9 @@ public class ScheduleService {
     }
 
     private List<Pomodoro> createPomodoros(List<String> todos) {
-        checkTodoBlank(todos);
         return todos.stream()
+                .filter(not(String::isBlank))
                 .map(Pomodoro::new)
                 .collect(Collectors.toList());
-    }
-
-    private void checkTodoBlank(List<String> todos) {
-        for (String todo : todos) {
-            if (todo.isBlank()) {
-                throw new IllegalArgumentException("할일이 있어야합니다.");
-            }
-        }
     }
 }
