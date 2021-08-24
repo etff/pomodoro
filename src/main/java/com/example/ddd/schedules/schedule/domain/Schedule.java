@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Entity
@@ -35,5 +36,18 @@ public class Schedule {
 
     public static Schedule of(Long userId, List<Pomodoro> pomodoros) {
         return new Schedule(userId, pomodoros);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Schedule)) return false;
+        Schedule schedule = (Schedule) o;
+        return Objects.equals(getId(), schedule.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
