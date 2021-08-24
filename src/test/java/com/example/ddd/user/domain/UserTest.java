@@ -16,7 +16,7 @@ class UserTest {
         assertThat(user.getName()).isEqualTo(new Name(name));
     }
 
-    @DisplayName("사용자는 이름을 가지고 있다.")
+    @DisplayName("사용자 정보를 수정할 수 있다.")
     @Test
     void changeInfo() {
         String name = "user1";
