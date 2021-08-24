@@ -22,10 +22,7 @@ public class UserService {
     public UserResponse createUser(UserRequest dto) {
         User user = dto.toEntity();
 
-        userRepository.findByName(user.getName())
-                .ifPresent(u -> {
-                    throw new EntityExistsException(ALREADY_EXIST_NAME + dto.getName());
-                });
+        checkUserExist(user);
         return UserResponse.of(userRepository.save(user));
     }
 
@@ -43,6 +40,13 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = findUser(id);
         userRepository.delete(user);
+    }
+
+    private void checkUserExist(User user) {
+        userRepository.findByName(user.getName())
+                .ifPresent(u -> {
+                    throw new EntityExistsException(ALREADY_EXIST_NAME + user.getName());
+                });
     }
 
     private User findUser(Long id) {

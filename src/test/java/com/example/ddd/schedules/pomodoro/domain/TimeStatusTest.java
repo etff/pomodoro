@@ -1,4 +1,4 @@
-package com.example.ddd.pomodoro.domain;
+package com.example.ddd.schedules.pomodoro.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class TimeStatusTest {
     @DisplayName("중지시간은 0분으로 이뤄져있다.")
     @Test
     void stop() {
-        assertThat(TimeStatus.STOP.getTime()).isEqualTo(0);
+        assertThat(TimeStatus.STOP.getTime()).isZero();
     }
 
 }
