@@ -1,4 +1,4 @@
-package com.example.ddd.pomodoro.domain;
+package com.example.ddd.schedules.pomodoro.domain;
 
 import javax.persistence.Embeddable;
 

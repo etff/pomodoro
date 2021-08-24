@@ -1,14 +1,18 @@
-package com.example.ddd.pomodoro.domain;
+package com.example.ddd.schedules.pomodoro.domain;
 
+import com.example.ddd.schedules.schedule.domain.Schedule;
 import lombok.Getter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -32,6 +36,10 @@ public class Pomodoro extends TimerTask {
     @Enumerated(EnumType.STRING)
     private TimeStatus timeStatus;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
+
     protected Pomodoro() {
     }
 
@@ -45,6 +53,10 @@ public class Pomodoro extends TimerTask {
         this.timeStatus = timeStatus;
         this.remainTime = new RemainTime(timeStatus);
         setTimer(timeStatus);
+    }
+
+    public static Pomodoro of(String toto) {
+        return new Pomodoro(toto);
     }
 
     private void setTimer(TimeStatus timeStatus) {

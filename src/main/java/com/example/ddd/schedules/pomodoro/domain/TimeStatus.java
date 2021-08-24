@@ -1,4 +1,4 @@
-package com.example.ddd.pomodoro.domain;
+package com.example.ddd.schedules.pomodoro.domain;
 
 public enum TimeStatus {
     STOP(0), WORK_SESSION(25), BREAKS(5);
